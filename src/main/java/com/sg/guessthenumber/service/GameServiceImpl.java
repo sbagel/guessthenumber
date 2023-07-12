@@ -11,7 +11,13 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class GameServiceImpl implements GameService {
+public class GameServiceImpl implements ServiceLayer {
+
+    private GameDao gameDao;
+    private RoundDao roundDao;
+
+    @Autowired
+    public GameServiceImpl (GameDao gameDao, RoundDao roundDao) {
         this.gameDao = gameDao;
         this.roundDao = roundDao;
     }
