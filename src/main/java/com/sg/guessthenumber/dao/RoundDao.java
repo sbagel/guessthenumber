@@ -4,7 +4,7 @@ import com.sg.guessthenumber.dto.Round;
 
 import java.util.List;
 
-public interface RoundDAO {
+public interface RoundDao {
     int createRound(Round round);
 
     List<Round> getRoundsByGameId(int gameId);

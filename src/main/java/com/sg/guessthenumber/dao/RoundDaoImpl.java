@@ -13,11 +13,11 @@ import java.util.List;
 
 
     @Repository
-    public class RoundDAOImpl implements RoundDAO {
+    public class RoundDaoImpl implements RoundDao {
 
         private final JdbcTemplate jdbcTemplate;
 
-        public RoundDAOImpl(JdbcTemplate jdbcTemplate) {
+        public RoundDaoImpl(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
         }
 

@@ -1,5 +1,6 @@
 package com.sg.guessthenumber.dao;
 
+import com.sg.guessthenumber.dao.GameDao;
 import com.sg.guessthenumber.dto.Game;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,16 +15,16 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class GameDAOImpl implements GameDAO {
+public class GameDaoImpl implements GameDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public GameDAOImpl(JdbcTemplate jdbcTemplate) {
+    public GameDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public int createGame(Game game) {
+    public Long createGame(Game game) {
         String sql = "INSERT INTO game (answer, finished) VALUES (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -34,13 +35,14 @@ public class GameDAOImpl implements GameDAO {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().intValue();
+        return keyHolder.getKey().longValue();
     }
 
     @Override
-    public Game getGameById(int gameId) {
+    public Game getGameById(Long id) {
         String sql = "SELECT * FROM game WHERE game_id = ?";
-        return jdbcTemplate.queryForObject(sql, new GameRowMapper(), gameId);
+        List<Game> games = jdbcTemplate.query(sql, new GameRowMapper(), id);
+        return games.isEmpty() ? null : games.get(0);
     }
 
     @Override
@@ -65,3 +67,6 @@ public class GameDAOImpl implements GameDAO {
         }
     }
 }
+
+
+
