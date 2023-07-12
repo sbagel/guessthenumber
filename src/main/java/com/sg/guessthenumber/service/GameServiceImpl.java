@@ -5,6 +5,7 @@ import com.sg.guessthenumber.dao.RoundDao;
 import com.sg.guessthenumber.model.Game;
 import com.sg.guessthenumber.model.Round;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
