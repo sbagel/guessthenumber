@@ -2,8 +2,8 @@ package com.sg.guessthenumber.service;
 
 import com.sg.guessthenumber.dao.GameDao;
 import com.sg.guessthenumber.dao.RoundDao;
-import com.sg.guessthenumber.model.Game;
-import com.sg.guessthenumber.model.Round;
+import com.sg.guessthenumber.dto.Game;
+import com.sg.guessthenumber.dto.Round;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
