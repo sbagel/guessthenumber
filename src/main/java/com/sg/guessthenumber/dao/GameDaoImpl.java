@@ -24,7 +24,7 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public Long createGame(Game game) {
+    public int createGame(Game game) {
         String sql = "INSERT INTO game (answer, finished) VALUES (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -35,11 +35,11 @@ public class GameDaoImpl implements GameDao {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().longValue();
+        return keyHolder.getKey().intValue();
     }
 
     @Override
-    public Game getGameById(Long id) {
+    public Game getGameById(int id) {
         String sql = "SELECT * FROM game WHERE game_id = ?";
         List<Game> games = jdbcTemplate.query(sql, new GameRowMapper(), id);
         return games.isEmpty() ? null : games.get(0);

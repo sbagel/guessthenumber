@@ -13,8 +13,8 @@ import java.util.Random;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private GameDao gameDao;
-    private RoundDao roundDao;
+    private final GameDao gameDao;
+    private final RoundDao roundDao;
 
     @Autowired
     public GameServiceImpl (GameDao gameDao, RoundDao roundDao) {
@@ -35,13 +35,12 @@ public class GameServiceImpl implements GameService {
     public int beginGame() {
         String answer = generateAnswer();
         Game game = new Game(answer, false);
-        game = gameDao.add(game);
-        return game.getId();
+        return gameDao.createGame(game);
     }
 
     @Override
     public Round guessNumber(Round round) {
-        Game game = gameDao.findById(round.getGameId());
+        Game game = gameDao.getGameById(round.getGameId());
         String answer = game.getAnswer();
         String guess = round.getGuess();
 
@@ -65,23 +64,23 @@ public class GameServiceImpl implements GameService {
             }
         }
         round.setResult("e:" + e + ":p:" + p);
-        roundDao.add(round);
+        roundDao.createRound(round);
 
         if (e == 4) {
             game.setFinished(true);
-            gameDao.update(game);
+            gameDao.updateGame(game);
         }
         return round;
     }
 
     @Override
     public List<Game> getAllGames() {
-        return gameDao.getAll();
+        return gameDao.getAllGames();
     }
 
     @Override
     public Game getGameById(int gameId) {
-        Game game = gameDao.findById(gameId);
+        Game game = gameDao.getGameById(gameId);
         if (game == null) {
             throw new RuntimeException("Game ID does not exist.");
         }
@@ -90,7 +89,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Round> getRoundsByGameId(int gameId) {
-        List<Round> rounds = roundDao.findByInt(gameId);
+        List<Round> rounds = roundDao.getRoundsByGameId(gameId);
         if (rounds == null) {
             throw new RuntimeException("Game ID does not exist.");
         }

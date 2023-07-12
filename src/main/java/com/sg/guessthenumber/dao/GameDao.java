@@ -5,8 +5,8 @@ import com.sg.guessthenumber.dto.Game;
 import java.util.List;
 
     public interface GameDao {
-        Long createGame(Game game);
-        Game getGameById(Long id);
+        int createGame(Game game);
+        Game getGameById(int id);
         List<Game> getAllGames();
         void updateGame(Game game);
     }
