@@ -33,7 +33,6 @@ public class GameDaoImpl implements GameDao {
         }, keyHolder);
 
         game.setGameId(keyHolder.getKey().intValue());
-
         return game.getGameId();
     }
 
