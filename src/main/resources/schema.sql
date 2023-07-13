@@ -1,7 +1,7 @@
- DROP DATABASE IF EXISTS guessthenumberdb;
+-- DROP DATABASE IF EXISTS guessthenumberdb;
 
- create database guessthenumberdb;
- use guessthenumberdb;
+-- create database guessthenumberdb;
+-- use guessthenumberdb;
 
 -- Table structure for game
 
