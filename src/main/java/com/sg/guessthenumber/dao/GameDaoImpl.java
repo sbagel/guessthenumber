@@ -57,6 +57,15 @@ public class GameDaoImpl implements GameDao {
         jdbcTemplate.update(sql, game.getAnswer(), game.isFinished(), game.getGameId());
     }
 
+    @Override
+    public void deleteGame(int gameId) {
+        final String roundSql ="DELETE FROM round WHERE game_id = ?";
+        jdbcTemplate.update(roundSql, gameId);
+        final String gameSql = "DELETE FROM game WHERE game_id = ?";
+        jdbcTemplate.update(gameSql, gameId);
+    }
+
+
     private static class GameRowMapper implements RowMapper<Game> {
         @Override
         public Game mapRow(ResultSet rs, int rowNum) throws SQLException {

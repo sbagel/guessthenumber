@@ -44,6 +44,18 @@ import java.util.List;
             return jdbcTemplate.query(sql, new RoundRowMapper(), gameId);
         }
 
+        @Override
+        public List<Round> getAllRounds() {
+            final String sql = "SELECT * FROM round";
+            return jdbcTemplate.query(sql, new RoundRowMapper());
+        }
+
+        @Override
+        public void deleteRound(int roundId) {
+            final String sql = "DELETE FROM round WHERE round_id = ?";
+            jdbcTemplate.update(sql, roundId);
+        }
+
         private static class RoundRowMapper implements RowMapper<Round> {
             @Override
             public Round mapRow(ResultSet rs, int rowNum) throws SQLException {

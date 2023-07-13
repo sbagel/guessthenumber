@@ -9,6 +9,7 @@ import java.util.List;
         Game getGameById(int id);
         List<Game> getAllGames();
         void updateGame(Game game);
+        void deleteGame(int gameId);
     }
 
 
