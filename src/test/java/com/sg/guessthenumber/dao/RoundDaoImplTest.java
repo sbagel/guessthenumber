@@ -24,12 +24,12 @@ public class RoundDaoImplTest {
     public void setUp() {
         List<Game> games = gameDao.getAllGames();
         for(Game game : games) {
-            gameDao.deleteGame(game.getId());
+            gameDao.deleteGame(game.getGameId());
         }
 
         List<Round> rounds = roundDao.getAllRounds();
         for (Round round : rounds){
-            roundDao.deleteRound(round.getId());
+            roundDao.deleteRound(round.getRoundId());
         }
     }
 
@@ -39,18 +39,17 @@ public class RoundDaoImplTest {
         Game game = new Game();
         game.setAnswer("6132");
         game.setFinished(false);
-        Game addedGame = gameDao.addGame(game);
-        int gameId = addedGame.getId();
+        int addedGame = gameDao.createGame(game);
 
         // add round
         Round round = new Round();
         round.setGuessTime(LocalDateTime.now());
-        round.setGame(gameId);
+        round.setGameId(addedGame);
         round.setGuess("1234");
         round.setResult("e:1:p:2");
-        Round addedRound = roundDao.addRound(round);
+        int addedRound = roundDao.createRound(round);
 
-        List<Round> fetchedRounds = roundDao.getAllRoundsByGameId(gameId);
+        List<Round> fetchedRounds = roundDao.getRoundsByGameId(addedGame);
 
         assertEquals(1,fetchedRounds.size());
     }

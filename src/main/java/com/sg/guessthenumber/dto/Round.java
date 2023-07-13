@@ -29,6 +29,10 @@ public class Round {
         this.result = result;
     }
 
+    public Round() {
+
+    }
+
     // Getters and setters
     public int getRoundId() {
         return roundId;
