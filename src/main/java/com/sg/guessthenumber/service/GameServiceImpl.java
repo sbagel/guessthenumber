@@ -28,7 +28,7 @@ public class GameServiceImpl implements GameService {
         String number = "";
         HashSet<Integer> set = new HashSet<>();
         while(true) {
-            int randomNum = random.nextInt();
+            int randomNum = random.nextInt(10);
             if (!set.contains(randomNum)) {
                 set.add(randomNum);
                 number += String.valueOf(randomNum);
