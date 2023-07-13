@@ -37,11 +37,12 @@ public class GameDaoImplTest {
         Game game = new Game();
         game.setAnswer("6132");
         game.setFinished(false);
-        int addedGame = gameDao.createGame(game);
+        int gameId = gameDao.createGame(game);
+        game.setGameId(gameId);
 
-        Game fetchedGame = gameDao.getGameById(addedGame);
+        Game fetchedGame = gameDao.getGameById(gameId);
 
-        assertEquals(addedGame, fetchedGame);
+        assertEquals(game, fetchedGame);
     }
 
     @Test
@@ -68,9 +69,10 @@ public class GameDaoImplTest {
         Game game = new Game();
         game.setAnswer("6132");
         game.setFinished(false);
-        int addedGame = gameDao.createGame(game);
+        int gameId = gameDao.createGame(game);
+        game.setGameId(gameId);
 
-        Game fetchedGame = gameDao.getGameById(addedGame);
+        Game fetchedGame = gameDao.getGameById(gameId);
 
         // before updating, fetchedGame's finish status should be false
         assertFalse(fetchedGame.isFinished());
@@ -79,7 +81,7 @@ public class GameDaoImplTest {
         game.setFinished(true);
         gameDao.updateGame(game);
 
-        fetchedGame = gameDao.getGameById(addedGame);
+        fetchedGame = gameDao.getGameById(gameId);
 
         // will check that the finish status is now true
         assertTrue(fetchedGame.isFinished());
