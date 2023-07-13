@@ -22,9 +22,9 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.CREATED).body(gameId);
     }
     @PostMapping("/guess")
-    public ResponseEntity<Round> makeGuess(@RequestBody Round roundDTO) {
-        Round result = gameService.guess(roundDTO.getGameId(), roundDTO.getGuess());
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    public ResponseEntity<Round> makeGuess(@RequestBody Round round) {
+        Round updatedRound = gameService.guessNumber(round);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedRound);
     }
     @GetMapping("/")
     public ResponseEntity<List<Game>> getAllGames() {
