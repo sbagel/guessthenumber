@@ -35,7 +35,7 @@ import java.util.List;
                 return ps;
             }, keyHolder);
 
-            return keyHolder.getKey().intValue();
+            return ((Number) keyHolder.getKeys().get("ROUND_ID")).intValue();
         }
 
         @Override
