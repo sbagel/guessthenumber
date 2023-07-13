@@ -61,12 +61,37 @@ public class GameServiceImpl implements GameService {
     public Round guessNumber(Round round) {
         // Get the game object based on the game ID in the round
         Game game = gameDao.getGameById(round.getGameId());
-        String answer = game.getAnswer();
-        String guess = round.getGuess();
+
+        // Check if the game is null
+        if (game == null) {
+            throw new RuntimeException("Game does not exist.");
+        }
+
         // Check if the game is already finished
         if (game.isFinished()) {
             throw new RuntimeException("Cannot place guess for a finished game.");
         }
+
+        // Check if the guess is valid
+        if (round.getGuess().length() != 4) {
+            throw new RuntimeException("Inaccurate guess size.");
+        }
+
+        // Check if the guess is unique
+        HashSet<Character> guessSet = new HashSet<>();
+
+        for (int i=0; i<4; i++) {
+            char c = round.getGuess().charAt(i);
+
+            if (guessSet.contains(c)) {
+                throw new RuntimeException(("Characters in guess are not unique."));
+            } else {
+                guessSet.add(c);
+            }
+        }
+
+        String answer = game.getAnswer();
+        String guess = round.getGuess();
 
         int e = 0;
         int p = 0;
@@ -105,7 +130,13 @@ public class GameServiceImpl implements GameService {
     @Override
     //Retrieve all games from the data access object and return the list
     public List<Game> getAllGames() {
-        return gameDao.getAllGames();
+        List<Game> games = gameDao.getAllGames();
+        for (Game game : games) {
+            if (!game.isFinished()) {
+                game.setAnswer("XXXX");
+            }
+        }
+        return games;
     }
 
     @Override
