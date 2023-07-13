@@ -24,11 +24,11 @@ CREATE TABLE round (
   FOREIGN KEY (game_id) REFERENCES Game(game_id)
 );
 
-INSERT INTO game (game_id, answer, finished) VALUES
-	(1, '5213', true),
-	(2, '7168', false);
+INSERT INTO game (answer, finished) VALUES
+	('5213', true),
+	('7168', false);
 
-INSERT INTO round (round_id, game_id, guess_time, guess, result) VALUES
-    (1, 1, '2023-07-01 07:25:18', '1234', 'e:1:p:2'),
-    (2, 1, '2023-07-01 09:11:07', '3215', 'e:2:p:2'),
-    (3, 1, '2023-07-01 09:11:49', '5213', 'e:4:p:0');
+INSERT INTO round (game_id, guess_time, guess, result) VALUES
+    (1, '2023-07-01 07:25:18', '1234', 'e:1:p:2'),
+    (1, '2023-07-01 09:11:07', '3215', 'e:2:p:2'),
+    (1, '2023-07-01 09:11:49', '5213', 'e:4:p:0');

@@ -8,10 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -25,17 +22,19 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public int createGame(Game game) {
-        String sql = "INSERT INTO game (answer, finished) VALUES (?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, game.getAnswer());
-            ps.setBoolean(2, game.isFinished());
-            return ps;
+        final String sql = "INSERT INTO game(answer, finished) VALUES(?,?)";
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update((Connection conn ) -> {
+            PreparedStatement statement = conn.prepareStatement(
+                    sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, game.getAnswer());
+            statement.setBoolean(2, game.isFinished());
+            return statement;
         }, keyHolder);
 
-        return keyHolder.getKey().intValue();
+        game.setGameId(keyHolder.getKey().intValue());
+        return game.getGameId();
     }
 
     @Override

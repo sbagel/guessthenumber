@@ -34,8 +34,9 @@ import java.util.List;
                 ps.setString(4, round.getResult());
                 return ps;
             }, keyHolder);
+            round.setRoundId(((Number) keyHolder.getKeys().get("ROUND_ID")).intValue());
 
-            return ((Number) keyHolder.getKeys().get("ROUND_ID")).intValue();
+            return round.getRoundId();
         }
 
         @Override
