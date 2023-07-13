@@ -23,12 +23,12 @@ public class GameDaoImplTest {
     public void setUp() {
         List<Game> games = gameDao.getAllGames();
         for(Game game : games) {
-            gameDao.deleteGame(game.getId());
+            gameDao.deleteGame(game.getGameId());
         }
 
         List<Round> rounds = roundDao.getAllRounds();
         for (Round round : rounds){
-            roundDao.deleteRound(round.getId());
+            roundDao.deleteRound(round.getRoundId());
         }
     }
 
@@ -37,9 +37,9 @@ public class GameDaoImplTest {
         Game game = new Game();
         game.setAnswer("6132");
         game.setFinished(false);
-        Game addedGame = gameDao.addGame(game);
+        int addedGame = gameDao.createGame(game);
 
-        Game fetchedGame = gameDao.getGameById(addedGame.getId());
+        Game fetchedGame = gameDao.getGameById(addedGame);
 
         assertEquals(addedGame, fetchedGame);
     }
@@ -49,18 +49,18 @@ public class GameDaoImplTest {
         Game finishedGame = new Game();
         finishedGame.setAnswer("1234");
         finishedGame.setFinished(true);
-        Game addedFinished = gameDao.addGame(finishedGame);
+        int addedFinished = gameDao.createGame(finishedGame);
 
         Game newGame = new Game();
         newGame.setAnswer("6132");
         newGame.setFinished(false);
-        Game addedNew = gameDao.addGame(newGame);
+        int addedNew = gameDao.createGame(newGame);
 
         List<Game> games = gameDao.getAllGames();
 
         assertEquals(2, games.size());
-        assertTrue(games.contains(finishedGame));
-        assertTrue(games.contains(addedNew));
+        assertTrue(games.contains(gameDao.getGameById(addedFinished)));
+        assertTrue(games.contains(gameDao.getGameById(addedNew)));
     }
 
     @Test
@@ -68,17 +68,18 @@ public class GameDaoImplTest {
         Game game = new Game();
         game.setAnswer("6132");
         game.setFinished(false);
-        Game addedGame = gameDao.addGame(game);
+        int addedGame = gameDao.createGame(game);
 
-        Game fetchedGame = gameDao.getGameById(addedGame.getId());
+        Game fetchedGame = gameDao.getGameById(addedGame);
 
         // before updating, fetchedGame's finish status should be false
         assertFalse(fetchedGame.isFinished());
 
         // gameDao.updateGame will update its finished status to true
-        gameDao.updateGame(fetchedGame.getId());
+        game.setFinished(true);
+        gameDao.updateGame(game);
 
-        fetchedGame = gameDao.getGameById(addedGame.getId());
+        fetchedGame = gameDao.getGameById(addedGame);
 
         // will check that the finish status is now true
         assertTrue(fetchedGame.isFinished());
