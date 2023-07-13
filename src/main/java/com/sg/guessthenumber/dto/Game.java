@@ -22,6 +22,10 @@ public class Game {
         this.finished = finished;
     }
 
+    public Game() {
+
+    }
+
     // Getters and setters
     public int getGameId() {
         return gameId;
