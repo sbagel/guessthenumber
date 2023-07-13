@@ -21,6 +21,7 @@ import java.util.List;
             this.jdbcTemplate = jdbcTemplate;
         }
 
+        //when setting the roundID, cast to superclass number so you can use intValue ofMethod
         @Override
         public int createRound(Round round) {
             String sql = "INSERT INTO round (game_id, guess, guess_time, result) VALUES (?, ?, ?, ?)";
