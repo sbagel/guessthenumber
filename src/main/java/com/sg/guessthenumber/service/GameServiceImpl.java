@@ -7,6 +7,7 @@ import com.sg.guessthenumber.dto.Round;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -25,8 +26,14 @@ public class GameServiceImpl implements GameService {
     public String generateAnswer() {
         Random random = new Random();
         String number = "";
-        for (int i = 0; i < 4; i++) {
-            number += String.valueOf(random.nextInt(10));
+        HashSet<Integer> set = new HashSet<>();
+        while(true) {
+            int randomNum = random.nextInt();
+            if (!set.contains(randomNum)) {
+                set.add(randomNum);
+                number += String.valueOf(randomNum);
+            }
+            if (set.size() == 4) break;
         }
         return number;
     }
